@@ -5,33 +5,32 @@ import pageobjects.LoginProcessPage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import pageobjects.checkPage;
 
 public class LoginSteps {
 
     private LoginProcessPage loginProcessPage;
+    private checkPage checkpage;
 
-    public LoginSteps(LoginProcessPage loginProcessPage)
+    public LoginSteps(LoginProcessPage loginProcessPage, checkPage checkpage)
     {
         this.loginProcessPage =	  loginProcessPage; // This is where pico-containers starts working
+        this.checkpage = checkpage;
 
     }
-
-    @Given("User is on HRMLogin page")
-    public void user_is_on_hrm_login_page() {
-        DriverHelper.startAtHomePage();
-         }
-
     @When("User enters cred")
     public void user_enters_cred() {
-        loginProcessPage.enterUsername();
-        loginProcessPage.enterPassword();
-        loginProcessPage.ClcikLogin();
+        checkpage.signIn();
+        checkpage.enterUsername();
+        checkpage.enterPassword();
+        checkpage.loginBtn();
     }
     @When("User enters cred invalid cred {string} and {string}")
     public void user_enters_cred_invalid_cred_and(String un, String pass) {
+        loginProcessPage.signIn();
         loginProcessPage.enter_Username(un);
         loginProcessPage.enter_Password(pass);
-        loginProcessPage.ClcikLogin();
+        loginProcessPage.loginBtn();
     }
     @Then("User should be able to login")
     public void user_should_be_able_to_login() {
